@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}New Genre{% endblock %}
+
+{% block content %}
+<a href="/">Back to home</a>
+<h1>Create new genre</h1>
+<div class="form-wrapper">
+    <div class="form-container"></div>
+    <button class="form-submit-btn" >Submit</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/form.js" ></script>
+<script src="/static/api.js" ></script>
+<script src="/static/utils.js" ></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        new CreateGenrePage();
+    });
+
+    class CreateGenrePage {
+        constructor() {
+            this.initializeForm();
+
+            // bind UI to actionable function
+            document.querySelector(".form-submit-btn").onclick = this.onFormSubmit;
+            this.form.attachTo(".form-container");
+        }
+
+        initializeForm = () => {
+            let formOption = {
+                fields: [
+                    {
+                        label: "genre_name",
+                        type: "string",
+                        default: "my new genre"
+                    }
+                ]
+            }
+            this.form = new Form(formOption);
+        }
+
+        onFormSubmit = () => {
+            if (!this.form.get("genre_name")) {
+                console.error("field empty value");
+                return;
+            }
+            API.create("/genre/", {
+                name: this.form.get("genre_name")
+            }).then(() => Router.navigateTo("/"));
+            
+        }
+    }
+</script>
+
+{% endblock %}

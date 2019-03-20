@@ -1,0 +1,71 @@
+{% extends 'base.html' %} {% block title %}New Movie{% endblock %} {% block
+content %}
+<a href="/">Back to home</a>
+<h1>Create new movie</h1>
+<div class="form-wrapper">
+  <div class="form-container"></div>
+  <button class="form-submit-btn">Submit</button>
+</div>
+{% endblock %} {% block scripts %}
+<script src="/static/form.js"></script>
+<script src="/static/api.js"></script>
+<script src="/static/utils.js"></script>
+
+<script>
+  window.addEventListener("DOMContentLoaded", event => {
+    new CreateMoviePage();
+  });
+
+  class CreateMoviePage {
+    constructor() {
+      Promise.all([API.list("/genres/")]).then(responses => {
+
+        // fetch all genres as options
+        let genreOptions = responses[0].genres.map((genre) => {
+            return {
+                id: genre.id,
+                text: genre.name
+            }
+        });
+
+        // initialize movie form
+        this.initializeForm([{
+            label: "major_genre",
+            type: "dropdown",
+            options: genreOptions
+        }]);
+
+        // bind UI to actionable function
+        document.querySelector(".form-submit-btn").onclick = this.onFormSubmit;
+        this.form.attachTo(".form-container");
+      });
+    }
+
+    initializeForm = (additionalFields={}) => {
+      let formOption = {
+        fields: [
+          {
+            label: "movie_name",
+            type: "string",
+            default: "my new movie"
+          },
+          ...additionalFields
+        ],
+      };
+      this.form = new Form(formOption);
+    };
+
+    onFormSubmit = () => {
+      if (!this.form.get("movie_name") || !this.form.get("major_genre")) {
+        console.error("field empty value");
+        return;
+      }
+      API.create("/movie/", {
+        name: this.form.get("movie_name"),
+        major_genre: this.form.get("major_genre")
+      }).then(() => Router.navigateTo("/"));
+    };
+  }
+</script>
+
+{% endblock %}

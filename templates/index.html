@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1>
+  Welcome to Movie website!
+</h1>
+
+<p>
+    <a href="/movie/">Create movie</a> |
+    <a href="/genre/">Create genre</a>
+</p>
+
+<p>
+  We have {{ movies_list | length }} movies in our database{% if movies_list %}
+  : {% else %}. {% endif %}
+</p>
+{% if movies_list %}
+<ul>
+  {% for movie in movies_list %}
+  <li>{{ movie }} (<a href="{{movie.get_json_url}}">json</a>)</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<p>
+  We have {{ genres_list | length }} genres in our database{% if genres_list %}: {% else %}. {% endif %}
+</p>
+{% if genres_list %}
+<ul>
+  {% for genre in genres_list %}
+  <li>{{ genre }} (<a href="{{genre.get_json_url}}">json</a>)</li>
+  {% endfor %}
+</ul>
+{% endif %} 
+
+{% endblock %}
