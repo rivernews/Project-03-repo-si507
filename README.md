@@ -64,5 +64,10 @@ API routes all return JSON objects. They don't serve html page but data.
 # Reference
 
 - [Project Description Google Doc](https://docs.google.com/document/d/1o22c0j575S2yZtlp9iiF4EdDrDmkc0qytxxS0yxczJg/edit).
+- [Using uuid as identifier in data model for Flask App](https://www.crifan.com/sqlalchemy_column_change_id_digit_to_uuid/)
 - [Databse schema design web app](https://app.quickdatabasediagrams.com/#/d/oo35Ob)
 - [SQLAlchemy Query Object API](https://docs.sqlalchemy.org/en/latest/orm/query.html)
+- [Design a REST API in flask](https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
+- [Mozilla Web Reference: <select>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)
+- [Foreign Key in Flask: not just the id column](https://stackoverflow.com/questions/35340015/access-attributes-of-second-model-instead-of-foreign-key)
+- [Flask - handling commit failure](https://stackoverflow.com/questions/8870217/sqlalchemy-nested-rollback-error)
